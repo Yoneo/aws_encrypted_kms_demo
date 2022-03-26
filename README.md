@@ -9,6 +9,7 @@ The objective is:
 -Symmetric encryption is to be used by default.  
 -The login data is stored as variables.  
 
-You can check the necessary AWS IAM policy settings in the file `IAM_policy.txt`.
+The Bouncy Castle JAR has to be included in build path. Download at [bouncycastle.org](https://bouncycastle.org/latest_releases.html)   
+You can check the necessary AWS IAM policy settings in the file `IAM_policy.txt`.  
 
 License: CC0
