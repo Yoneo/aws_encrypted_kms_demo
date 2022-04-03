@@ -4,6 +4,7 @@ This document shows exemplarily how the cloud storage Amazon Simple Storage Serv
 
 | Detail | Value |
 | ------------------------------------ | ------------------------------------------------------------ |
+| YouTube Playlist | [here (german)](https://www.youtube.com/playlist?list=PL0GdkoH5F88Ljz3__UnW3OKg9BD8TEN9R) |
 | Eclipse version used | Eclipse IDE for Java Developers 2021-12 (4.22.0) |
 | JRE | JavaSE-17 |
 | AWS Java SDK | Version 2 |
@@ -24,7 +25,7 @@ Dedicated authorizations can be realized on AWS via so-called IAM users (Identit
 
 The IAM user is created using the AWS Management Console. The AWS credential type _Access key_ must be selected.
 
-IMAGE![](documentation_screenshots\Picture1.png)
+![](documentation_screenshots/Picture1.png)
 
 The policy template (json file `IAM_policy.txt`) can be used for the IAM authorizations. The identifier of the bucket and the KMS key must be added. 
 
@@ -40,9 +41,11 @@ The permissions correspond exactly to the requirements of the following demo cod
 To configure the permissions , the aforementioned JSON code is inserted via _Create policy_. The *ARN identifier (Amazon Resource Name*) of the *S3 bucket* and the *KMS key* must be entered in it. Both data can be found in the management console in the respective areas.
 This policy is named and saved. It can then be added to the IAM user:
 
-![](documentation_screenshots\Picture2.png)
+![](documentation_screenshots/Picture2.png)
 
-![](documentation_screenshots\Picture3.png)
+After the IAM user has been created, the access key ID and the secret access key can be copied into the sample code (file `S3Sample_encrypted_kms.java`). The region of the bucket must also be specified. The technical notation of the regions can be found in the [AWS documentation](https://docs.aws.amazon.com/de_de/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.AvailabilityZones).
+
+![](documentation_screenshots/Picture3.png)
 
 ### 1.2 Storage
 
@@ -62,7 +65,7 @@ For the test, ACL *(access control lists)* and *public access* remain disabled. 
 
 A new KMS key can then be created:
 
-![](/documentation_screenshots\Picture4.png)
+![](/documentation_screenshots/Picture4.png)
 
 ### 1.3 Key Management System
 
@@ -72,7 +75,7 @@ The AWS Key Management System (KMS) is used to manage keys in the Amazon AWS inf
 
 Symmetric encryption is selected as the *key type:*
 
-![](documentation_screenshots\Picture5.png)
+![](documentation_screenshots/Picture5.png)
 
 The name is only used for assignment and can also be changed later.
 
@@ -80,13 +83,13 @@ For the key administrators and key usage permissions, an IAM user must be select
 
 #### 1.3.2 Link bucket to KMS Key
 
-After that, the *KMS key* can ![](/documentation_screenshots\6.png) be selected (if necessary after clicking the reload icon) when creating the *bucket.*
+After that, the *KMS key* can be selected (if necessary after clicking the reload icon) when creating the *bucket.*
 
 A *bucket key* is used to reduce costs because a separate KMS key is not created for each object. Instead, a bucket-wide, unified key is used. This also results in fewer requests (see [AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-key.html) for details).
 
 After the bucket has been created, the bucket name and *KMS Key ID* are stored in the sample code:
 
-![](documentation_screenshots\7.png)
+![](documentation_screenshots/Picture6.png)
 
 The ID of the *KMS key* can be found in the AWS Management Console when the corresponding key is selected under KMS.
 
@@ -98,9 +101,9 @@ In order for the encryption to be used, the Bouncy Castle *JAR* must be integrat
 
 [Screencast](https://youtu.be/1ZPeXD3a010) (german, 30 sec)
 
-The file can be downloaded from the [website bouncycastle.org.](https://bouncycastle.org/latest_releases.html) After that, a right-click on the Eclipse project is made and under *Build Path* the function *Add External Archives.*.. elected:
+The file can be downloaded from the [website bouncycastle.org.](https://bouncycastle.org/latest_releases.html) After that, a right-click on the Eclipse project is made and under *Build Path* the function *Add External Archives.*.. selected:
 
-![](documentation_screenshots\Picture8.png)
+![](documentation_screenshots/Picture7.png)
 
 Select the downloaded JAR file.
 
@@ -127,7 +130,6 @@ With client-side encryption, you can choose two options: a key stored in AWS KMS
 In the example code, a *KMS* customer *master key (CMK)* is used (see Chapter 3.3.1). This is permanently in amazon's infrastructure and is only addressed via API. So we use only a *Data Key,* which is responsible for the encryption of the data and other data keys. *Data keys* can occur in encrypted or unencrypted form (see [AWS documentation](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#data-keys)). The unencrypted version of the data key (plaintext) is required for encryption.
 
 #### 2.3.2 Upload
-
 
     AmazonS3EncryptionV2 s3Encryption = AmazonS3EncryptionClientV2Builder.standard(). withRegion(region)
     . withCredentials(new AWSStaticCredentialsProvider(awsCreds))
@@ -171,7 +173,7 @@ The following method `s3Encryption.shutdown` ends the session.
 
 ## 3. Futher information
 
-●Code Examples: https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/javav2
-●API Documentation: https://sdk.amazonaws.com/java/api/latest/
-●Official GitHub Repo: https://github.com/aws/aws-sdk-java-v2
-●Maven Repo: https://mvnrepository.com/artifact/software.amazon.awssdk/s3
+●Code Examples: https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/javav2  
+●API Documentation: https://sdk.amazonaws.com/java/api/latest/  
+●Official GitHub Repo: https://github.com/aws/aws-sdk-java-v2  
+●Maven Repo: https://mvnrepository.com/artifact/software.amazon.awssdk/s3  
