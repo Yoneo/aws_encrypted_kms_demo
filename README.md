@@ -13,3 +13,5 @@ The Bouncy Castle JAR has to be included in build path. Download at [bouncycastl
 You can check the necessary AWS IAM policy settings in the file `IAM_policy.txt`.  
 
 License: CC0
+
+For detailed documentation see file `Blueprint AWS.md`.
